@@ -5,7 +5,7 @@ using UnityEngine;
 public class CellularAutomata : MonoBehaviour
 {
 
-    public Grid grid;
+    /*public Grid grid;
 
     public Cell[] cells;
     public Cell[] newCells;
@@ -22,7 +22,7 @@ public class CellularAutomata : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            cells
+            //cells
         }
-    }
+    }*/
 }
