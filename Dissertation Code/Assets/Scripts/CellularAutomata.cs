@@ -5,7 +5,7 @@ using UnityEngine;
 public class CellularAutomata : MonoBehaviour
 {
 
-    /*public Grid grid;
+    public Grid grid;
 
     public Cell[] cells;
     public Cell[] newCells;
@@ -14,7 +14,7 @@ public class CellularAutomata : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cells = grid.cells;
+        //cells = grid.cells;
     }
 
     // Update is called once per frame
@@ -22,7 +22,8 @@ public class CellularAutomata : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            Debug.Log("Mouse press");
             //cells
         }
-    }*/
+    }
 }
