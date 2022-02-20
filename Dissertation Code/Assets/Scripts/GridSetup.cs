@@ -26,7 +26,7 @@ public class GridSetup : MonoBehaviour
             {
                 for(float z=0f; z < zLength; z++)
                 {
-                    Instantiate(cell, new Vector3(x, y, z), Quaternion.identity);
+                    Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
                 }
             }
         }

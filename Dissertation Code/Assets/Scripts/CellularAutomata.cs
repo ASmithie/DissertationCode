@@ -5,8 +5,6 @@ using UnityEngine;
 public class CellularAutomata : MonoBehaviour
 {
 
-    public Grid grid;
-
     public Cell[] cells;
     public Cell[] newCells;
 
