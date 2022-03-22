@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridSetup : MonoBehaviour
+public class CAGrid : MonoBehaviour
 {
 
     public int xLength;
@@ -13,6 +13,8 @@ public class GridSetup : MonoBehaviour
     public Cell[] cells;
 
     public Cell cell;
+
+    public CellBehaviour behaviour;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,10 @@ public class GridSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreach(Cell c in cells)
+        {
+            float newPressure = behaviour.CalculatePressure(c, cells, this);
+            Debug.Log(newPressure);
+        }
     }
 }
