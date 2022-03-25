@@ -10,7 +10,7 @@ public class CAGrid : MonoBehaviour
     public int zLength;
 
 
-    public Cell[] cells;
+    public List<Cell> cells = new List<Cell>();
 
     public Cell cell;
 
@@ -20,7 +20,7 @@ public class CAGrid : MonoBehaviour
     void Start()
     {
 
-        cells = new Cell[xLength * yLength * zLength];
+        //cells = new Cell[xLength * yLength * zLength];
 
         for(float x =0f; x < xLength; x++)
         {
@@ -28,10 +28,15 @@ public class CAGrid : MonoBehaviour
             {
                 for(float z=0f; z < zLength; z++)
                 {
-                    Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
+                    Cell newCell = Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
+                    cells.Add(newCell);
+                    Debug.Log(newCell);
+
                 }
             }
         }
+
+        
     }
 
     // Update is called once per frame
@@ -41,6 +46,7 @@ public class CAGrid : MonoBehaviour
         {
             float newPressure = behaviour.CalculatePressure(c, cells, this);
             Debug.Log(newPressure);
+            c.UpdatePressure(newPressure);
         }
     }
 }

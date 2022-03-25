@@ -25,6 +25,11 @@ public class Cell : MonoBehaviour
         }
     }
 
+    public void UpdatePressure(float newPressure)
+    {
+        airPressure = newPressure;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

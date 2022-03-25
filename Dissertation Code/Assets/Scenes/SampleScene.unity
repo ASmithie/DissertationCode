@@ -266,7 +266,7 @@ MonoBehaviour:
   zLength: 5
   cells: []
   cell: {fileID: 8711761644206713772, guid: 17a317a8ed0037f4991b55ee92b2ad92, type: 3}
-  behaviour: {fileID: 0}
+  behaviour: {fileID: 11400000, guid: bc20109aabe2fdc4ea553b024690e74b, type: 2}
 --- !u!114 &832166451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,8 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a760c43211a598c4ba26232adb6565e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cells: []
-  newCells: []
 --- !u!156049354 &832166452
 Grid:
   m_ObjectHideFlags: 0
