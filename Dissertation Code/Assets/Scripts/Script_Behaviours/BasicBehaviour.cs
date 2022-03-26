@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CA/Behaviour/Basic")]
-public class CABehaviour : CellBehaviour
+public class BasicBehaviour : CellBehaviour
 {
 
     public float addPressure;

@@ -32,14 +32,13 @@ public class CAGrid : MonoBehaviour
                     Cell newCell = Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
                     //cells.Add(newCell);
                     cells[x, y, z] = newCell;
+                    newCell.airPressure = Random.Range(0f, 1f);
                     
                 }
             }
         }
 
-        Cell[] neighbourhood = new Cell[6];
-        neighbourhood = FindNeighbourhood(cells[3,3,3]);
-        foreach(Cell c in neighbourhood) { Debug.DrawRay(c.transform.position, Vector3.up, Color.red, 10); }
+        
 
     }
 
