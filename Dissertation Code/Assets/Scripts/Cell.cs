@@ -13,6 +13,9 @@ public class Cell : MonoBehaviour
 
     Vector3[] corners;
 
+    Color color;
+    Renderer rend;
+
     void OnDrawGizmos()
     {
         MakeCube();
@@ -28,12 +31,22 @@ public class Cell : MonoBehaviour
     public void UpdatePressure(float newPressure)
     {
         airPressure = newPressure;
+        UpdateColor();
+    }
+
+    void UpdateColor()
+    {
+        color = rend.material.GetColor("_Color");
+        color.a = Mathf.Clamp(airPressure, 0f, 1f);
+        rend.material.SetColor("_Color", color);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //RenderCube();
+        MakeCube();
+        RenderCube();
+        rend = GetComponent<Renderer>();
     }
 
     void MakeCube()

@@ -10,6 +10,6 @@ public class CABehaviour : CellBehaviour
 
     public override float CalculatePressure(Cell cell, Cell[] neighbourhood, CAGrid grid)
     {
-        return cell.airPressure + addPressure;
+        return cell.airPressure >= 255 ? cell.airPressure : cell.airPressure + addPressure;
     }
 }
