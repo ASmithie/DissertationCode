@@ -263,7 +263,8 @@ MonoBehaviour:
   yLength: 10
   zLength: 10
   cell: {fileID: 8711761644206713772, guid: 17a317a8ed0037f4991b55ee92b2ad92, type: 3}
-  behaviour: {fileID: 11400000, guid: 437e37ab95541714086480060ea42d9e, type: 2}
+  behaviour: {fileID: 11400000, guid: dd3b5cdd4feb4404c99385a07257aa7f, type: 2}
+  startBehaviour: {fileID: 11400000, guid: 4f17f7c9539cd304195dddc0a7338999, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

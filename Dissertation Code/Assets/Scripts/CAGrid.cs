@@ -16,6 +16,7 @@ public class CAGrid : MonoBehaviour
     public Cell cell;
 
     public CellBehaviour behaviour;
+    public CellBehaviour startBehaviour;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +33,18 @@ public class CAGrid : MonoBehaviour
                     Cell newCell = Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
                     //cells.Add(newCell);
                     cells[x, y, z] = newCell;
-                    newCell.airPressure = Random.Range(0f, 1f);
+                    //newCell.airPressure = Random.Range(0f, 1f);
                     
                 }
             }
         }
 
-        
+        foreach (Cell c in cells)
+        {
+            Cell[] neighbourhood = new Cell[6];
+            float newPressure = startBehaviour.CalculatePressure(c, neighbourhood, this);
+            c.UpdatePressure(newPressure);
+        }
 
     }
 

@@ -36,6 +36,7 @@ public class Cell : MonoBehaviour
 
     void UpdateColor()
     {
+        rend = GetComponent<Renderer>();
         color = rend.material.GetColor("_Color");
         color.a = Mathf.Clamp(airPressure, 0f, 1f);
         rend.material.SetColor("_Color", color);
@@ -43,10 +44,9 @@ public class Cell : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         MakeCube();
         RenderCube();
-        rend = GetComponent<Renderer>();
     }
 
     void MakeCube()
@@ -86,5 +86,4 @@ public class Cell : MonoBehaviour
         mesh.Optimize();
         mesh.RecalculateNormals();
     }
-
 }
