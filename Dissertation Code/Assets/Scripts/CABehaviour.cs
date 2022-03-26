@@ -8,7 +8,7 @@ public class CABehaviour : CellBehaviour
 
     public float addPressure;
 
-    public override float CalculatePressure(Cell cell, List<Cell> neighbourhood, CAGrid grid)
+    public override float CalculatePressure(Cell cell, Cell[] neighbourhood, CAGrid grid)
     {
         return cell.airPressure + addPressure;
     }
