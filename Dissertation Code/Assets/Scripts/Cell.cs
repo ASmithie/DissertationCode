@@ -8,7 +8,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
 
-    
+    public bool isInert = false;
     public float airPressure;
     public float heat;
 
@@ -19,21 +19,33 @@ public class Cell : MonoBehaviour
 
     public void UpdatePressure(float newPressure)
     {
-        airPressure = Mathf.Clamp(newPressure, 0f, 100000f);
+        if (!isInert)
+        {
+            airPressure = Mathf.Clamp(newPressure, 0f, 100000f);
+        }
         UpdateColor();
+
     }
 
     void UpdateColor()
     {
         rend = GetComponent<Renderer>();
-        color = rend.material.GetColor("_Color");
-        color.a = Mathf.InverseLerp(0f, 100000f, airPressure);
-        rend.material.SetColor("_Color", color);
+        if (isInert)
+        {
+            rend.material.SetColor("_Color", Color.red);
+        }
+        else
+        {
+            color = rend.material.GetColor("_Color");
+            color.a = Mathf.InverseLerp(0f, 100000f, airPressure);
+            rend.material.SetColor("_Color", color);
+        }
+
     }
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         MakeCube();
         RenderCube();
     }
