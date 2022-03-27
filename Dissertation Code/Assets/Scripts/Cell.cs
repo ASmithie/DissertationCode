@@ -8,6 +8,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
 
+    
     public float airPressure;
     public float heat;
 

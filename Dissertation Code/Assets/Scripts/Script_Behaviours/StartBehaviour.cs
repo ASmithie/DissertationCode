@@ -10,6 +10,6 @@ public class StartBehaviour : CellBehaviour
 
     public override float CalculatePressure(Cell cell, Cell[] neighbourhood, CAGrid grid)
     {
-        return Random.Range(0f, 100000f);
+        return Random.Range(0f, 100f);
     }
 }
