@@ -16,21 +16,9 @@ public class Cell : MonoBehaviour
     Color color;
     Renderer rend;
 
-    void OnDrawGizmos()
-    {
-        MakeCube();
-
-        Gizmos.matrix = transform.localToWorldMatrix;
-
-        foreach (Vector3 corner in corners)
-        {
-            Gizmos.DrawSphere(corner, 0.1f);
-        }
-    }
-
     public void UpdatePressure(float newPressure)
     {
-        airPressure = newPressure;
+        airPressure = Mathf.Clamp(newPressure, 0f, 100000f);
         UpdateColor();
     }
 
@@ -38,7 +26,7 @@ public class Cell : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         color = rend.material.GetColor("_Color");
-        color.a = Mathf.Clamp(airPressure, 0f, 1f);
+        color.a = Mathf.InverseLerp(0f, 100000f, airPressure);
         rend.material.SetColor("_Color", color);
     }
 

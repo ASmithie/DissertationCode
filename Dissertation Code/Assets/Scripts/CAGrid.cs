@@ -51,12 +51,36 @@ public class CAGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach(Cell c in cells)
+        float[,,] newPressures = new float[xLength,yLength,zLength];
+        
+        for (int x = 0; x < xLength; x++)
         {
-            Cell[] neighbourhood = new Cell[6];
-            neighbourhood = FindNeighbourhood(c);
-            float newPressure = behaviour.CalculatePressure(c, neighbourhood, this);
-            c.UpdatePressure(newPressure);
+            for (int y = 0; y < yLength; y++)
+            {
+                for (int z = 0; z < zLength; z++)
+                {
+                    Cell[] neighbourhood = new Cell[6];
+                    neighbourhood = FindNeighbourhood(cells[x,y,z]);
+                    float newPressure = behaviour.CalculatePressure(cells[x, y, z], neighbourhood, this);
+                    newPressures[x, y, z] = newPressure;
+                }
+            }
+        }
+
+        UpdatePressures(newPressures);
+    }
+
+    void UpdatePressures(float[,,] newPressures)
+    {
+        for (int x = 0; x < xLength; x++)
+        {
+            for (int y = 0; y < yLength; y++)
+            {
+                for (int z = 0; z < zLength; z++)
+                {
+                    cells[x, y, z].UpdatePressure(newPressures[x, y, z]);
+                }
+            }
         }
     }
 

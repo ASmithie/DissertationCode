@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CA/Behaviour/MultiRuleCA")]
-public class MultiRuleBehaviour : CellBehaviour
+public class OddBehaviour1 : CellBehaviour
 {
 
     public float PressureTransferModifier;
@@ -23,11 +23,11 @@ public class MultiRuleBehaviour : CellBehaviour
         }
 
         float averagePressure = totalPressure / neighbourhoodSize;
-        //PressureTransferModifier = Mathf.Abs(cell.airPressure + averagePressure);
+        PressureTransferModifier = Mathf.Abs(cell.airPressure + averagePressure);
 
         if(averagePressure > cell.airPressure + meanOffset)
         {
-            return cell.airPressure + PressureTransferModifier * Mathf.InverseLerp(0f,100000f,averagePressure);
+            return cell.airPressure + 1f * PressureTransferModifier;
         }
         else if(averagePressure <= cell.airPressure + meanOffset && averagePressure >= cell.airPressure - meanOffset)
         {
@@ -35,7 +35,7 @@ public class MultiRuleBehaviour : CellBehaviour
         }
         else
         {
-            return cell.airPressure - PressureTransferModifier * Mathf.InverseLerp(0f, 100000f, averagePressure);
+            return cell.airPressure - 1f * PressureTransferModifier;
         }
     }
 }

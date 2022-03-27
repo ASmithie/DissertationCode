@@ -11,21 +11,24 @@ public class FirstCABehaviour : CellBehaviour
     public override float CalculatePressure(Cell cell, Cell[] neighbourhood, CAGrid grid)
     {
         float totalPressure = 0;
-
-        for(int i = 0; i < neighbourhood.Length; i++)
+        float neighbourhoodSize = 0;
+        for (int i = 0; i < neighbourhood.Length; i++)
         {
-            if(neighbourhood[i] != null)
+            if (neighbourhood[i] != null)
             {
                 totalPressure += neighbourhood[i].airPressure;
+                neighbourhoodSize++;
             }
         }
 
-        if(totalPressure / 6 >= cell.airPressure)
+        float averagePressure = totalPressure / neighbourhoodSize;
+
+        if (averagePressure >= cell.airPressure)
         {
-            return cell.airPressure >= 255f ? cell.airPressure : cell.airPressure + totalPressure * PressureTransferModifier;
+            return cell.airPressure + averagePressure * PressureTransferModifier;
         } else
         {
-            return cell.airPressure <= 0f ? cell.airPressure : cell.airPressure - totalPressure * PressureTransferModifier;
+            return cell.airPressure - averagePressure * PressureTransferModifier;
         }
     }
 }
