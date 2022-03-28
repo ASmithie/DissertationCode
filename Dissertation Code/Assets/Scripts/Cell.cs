@@ -29,7 +29,7 @@ public class Cell : MonoBehaviour
 
     void UpdateColor()
     {
-        rend = GetComponent<Renderer>();
+        //rend = GetComponent<Renderer>();
         if (isInert)
         {
             rend.material.SetColor("_Color", Color.red);
@@ -46,8 +46,28 @@ public class Cell : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rend = GetComponent<Renderer>();
         MakeCube();
         RenderCube();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            isInert = true;
+            Debug.Log("Wall");
+        }
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            isInert = false;
+            Debug.Log("EXIT");
+
+            rend.material.SetColor("_Color", Color.blue);
+        }
     }
 
     void MakeCube()

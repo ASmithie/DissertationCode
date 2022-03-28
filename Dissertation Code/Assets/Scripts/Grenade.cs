@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
-
-    public bool explode = false;
     Cell cellInside;
 
     private void Update()
