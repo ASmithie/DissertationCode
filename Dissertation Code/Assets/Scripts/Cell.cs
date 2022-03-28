@@ -17,6 +17,8 @@ public class Cell : MonoBehaviour
     Color color;
     Renderer rend;
 
+    GameObject collidedWith;
+
     public void UpdatePressure(float newPressure)
     {
         if (!isInert)
@@ -47,24 +49,24 @@ public class Cell : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
+        rend.material.SetColor("_Color", Color.blue);
         MakeCube();
         RenderCube();
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Environment"))
         {
             isInert = true;
-            Debug.Log("Wall");
+            collidedWith = other.gameObject;
         }
     }
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject == collidedWith)
         {
             isInert = false;
-            Debug.Log("EXIT");
 
             rend.material.SetColor("_Color", Color.blue);
         }

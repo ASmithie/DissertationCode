@@ -13,9 +13,9 @@ public class MultiRuleBehaviour : CellBehaviour
     {
         float totalPressure = 0;
         float neighbourhoodSize = 0;
-        for(int i = 0; i < neighbourhood.Length; i++)
+        for (int i = 0; i < neighbourhood.Length; i++)
         {
-            if(neighbourhood[i] != null)
+            if (neighbourhood[i] != null && !neighbourhood[i].isInert)
             {
                 totalPressure += neighbourhood[i].airPressure;
                 neighbourhoodSize++;
@@ -25,17 +25,21 @@ public class MultiRuleBehaviour : CellBehaviour
         float averagePressure = totalPressure / neighbourhoodSize;
         //PressureTransferModifier = Mathf.Abs(cell.airPressure + averagePressure);
 
-        if(averagePressure > cell.airPressure + meanOffset)
+        if (averagePressure > cell.airPressure + meanOffset)
         {
-            return cell.airPressure + PressureTransferModifier * Mathf.InverseLerp(0f,100000f,averagePressure);
+            return cell.airPressure + PressureTransferModifier * Mathf.InverseLerp(0f, 100000f, averagePressure) * neighbourhoodSize;
         }
-        else if(averagePressure <= cell.airPressure + meanOffset && averagePressure >= cell.airPressure - meanOffset)
+        else if (averagePressure <= cell.airPressure + meanOffset && averagePressure >= cell.airPressure)
         {
             return cell.airPressure;
         }
+        else if (averagePressure < cell.airPressure && averagePressure > 100f)
+        {
+            return cell.airPressure - PressureTransferModifier * Mathf.InverseLerp(0f, 100000f, averagePressure) * neighbourhoodSize;
+        }
         else
         {
-            return cell.airPressure - PressureTransferModifier * Mathf.InverseLerp(0f, 100000f, averagePressure);
+            return cell.airPressure;
         }
     }
 }
