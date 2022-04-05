@@ -13,6 +13,7 @@ public class Grenade : MonoBehaviour
             if (cellInside)
             {
                 cellInside.UpdatePressure(100000f);
+                cellInside.UpdateHeat(100f);
             }
 
         }

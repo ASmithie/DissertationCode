@@ -22,19 +22,19 @@ public class CAGrid : MonoBehaviour
     void Start()
     {
 
-        cells = new Cell[xLength,yLength,zLength];
+        cells = new Cell[xLength, yLength, zLength];
 
-        for (int x =0; x < xLength; x++)
+        for (int x = 0; x < xLength; x++)
         {
-            for(int y =0; y < yLength; y++)
+            for (int y = 0; y < yLength; y++)
             {
-                for(int z=0; z < zLength; z++)
+                for (int z = 0; z < zLength; z++)
                 {
                     Cell newCell = Instantiate(cell, new Vector3(x, y, z), Quaternion.identity, transform);
                     //cells.Add(newCell);
                     cells[x, y, z] = newCell;
                     //newCell.airPressure = Random.Range(0f, 1f);
-                    
+
                 }
             }
         }
@@ -43,7 +43,9 @@ public class CAGrid : MonoBehaviour
         {
             Cell[] neighbourhood = new Cell[6];
             float newPressure = startBehaviour.CalculatePressure(c, neighbourhood, this);
+            float newHeat = startBehaviour.CalculateHeat(c, neighbourhood, this);
             c.UpdatePressure(newPressure);
+            c.UpdateHeat(newHeat);
         }
 
     }
@@ -51,8 +53,8 @@ public class CAGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float[,,] newPressures = new float[xLength,yLength,zLength];
-        
+        float[,,] newPressures = new float[xLength, yLength, zLength];
+        float[,,] newHeats = new float[xLength, yLength, zLength];
         for (int x = 0; x < xLength; x++)
         {
             for (int y = 0; y < yLength; y++)
@@ -60,17 +62,19 @@ public class CAGrid : MonoBehaviour
                 for (int z = 0; z < zLength; z++)
                 {
                     Cell[] neighbourhood = new Cell[6];
-                    neighbourhood = FindNeighbourhood(cells[x,y,z]);
+                    neighbourhood = FindNeighbourhood(cells[x, y, z]);
                     float newPressure = behaviour.CalculatePressure(cells[x, y, z], neighbourhood, this);
                     newPressures[x, y, z] = newPressure;
+                    float newHeat = behaviour.CalculateHeat(cells[x, y, z], neighbourhood, this);
+                    newHeats[x, y, z] = newHeat;
                 }
             }
         }
 
-        UpdatePressures(newPressures);
+        UpdateCells(newPressures, newHeats);
     }
 
-    void UpdatePressures(float[,,] newPressures)
+    void UpdateCells(float[,,] newPressures, float[,,] newHeats)
     {
         for (int x = 0; x < xLength; x++)
         {
@@ -79,6 +83,7 @@ public class CAGrid : MonoBehaviour
                 for (int z = 0; z < zLength; z++)
                 {
                     cells[x, y, z].UpdatePressure(newPressures[x, y, z]);
+                    cells[x, y, z].UpdateHeat(newHeats[x, y, z]);
                 }
             }
         }
@@ -95,32 +100,32 @@ public class CAGrid : MonoBehaviour
                 {
                     if (c == cells[x, y, z])
                     {
-                        if(x != 0)
+                        if (x != 0)
                         {
                             neighbourhood[0] = cells[x - 1, y, z];
                             //Debug.Log("0" + neighbourhood[0]);
                         }
-                        if(y != 0)
+                        if (y != 0)
                         {
                             neighbourhood[1] = cells[x, y - 1, z];
                             //Debug.Log("1" + neighbourhood[1]);
                         }
-                        if(z != 0)
+                        if (z != 0)
                         {
                             neighbourhood[2] = cells[x, y, z - 1];
                             //Debug.Log("2" + neighbourhood[2]);
                         }
-                        if(x < xLength-1)
+                        if (x < xLength - 1)
                         {
                             neighbourhood[3] = cells[x + 1, y, z];
                             //Debug.Log("3" + neighbourhood[3]);
                         }
-                        if(y < yLength-1)
+                        if (y < yLength - 1)
                         {
                             neighbourhood[4] = cells[x, y + 1, z];
                             //Debug.Log("4" + neighbourhood[4]);
                         }
-                        if(z < zLength-1)
+                        if (z < zLength - 1)
                         {
                             neighbourhood[5] = cells[x, y, z + 1];
                             //Debug.Log("5" + neighbourhood[5]);

@@ -12,4 +12,9 @@ public class StartBehaviour : CellBehaviour
     {
         return Random.Range(10f, 100f);
     }
+
+    public override float CalculateHeat(Cell cell, Cell[] neighbourhood, CAGrid grid)
+    {
+        return Random.Range(1f, 20f);
+    }
 }

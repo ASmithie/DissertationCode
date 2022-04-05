@@ -25,21 +25,48 @@ public class Cell : MonoBehaviour
         {
             airPressure = Mathf.Clamp(newPressure, 0f, 100000f);
         }
-        UpdateColor();
+        UpdateBlueColor();
 
     }
 
-    void UpdateColor()
+    public void UpdateHeat(float newHeat)
+    {
+        if (!isInert)
+        {
+            heat = newHeat;
+        }
+        UpdateRedColor();
+    }
+
+    void UpdateBlueColor()
     {
         //rend = GetComponent<Renderer>();
         if (isInert)
         {
-            rend.material.SetColor("_Color", Color.red);
+            rend.material.SetColor("_Color", Color.green);
         }
         else
         {
             color = rend.material.GetColor("_Color");
             color.a = Mathf.InverseLerp(0f, 100000f, airPressure);
+            color.b = Mathf.InverseLerp(0f, 100000f, airPressure);
+            rend.material.SetColor("_Color", color);
+        }
+
+    }
+
+    void UpdateRedColor()
+    {
+        //rend = GetComponent<Renderer>();
+        if (isInert)
+        {
+            rend.material.SetColor("_Color", Color.green);
+        }
+        else
+        {
+            color = rend.material.GetColor("_Color");
+            color.a = Mathf.InverseLerp(0f, 100f, heat);
+            color.r = Mathf.InverseLerp(0f, 100f, heat);
             rend.material.SetColor("_Color", color);
         }
 

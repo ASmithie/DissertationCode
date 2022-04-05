@@ -13,9 +13,9 @@ public class OddBehaviour1 : CellBehaviour
     {
         float totalPressure = 0;
         float neighbourhoodSize = 0;
-        for(int i = 0; i < neighbourhood.Length; i++)
+        for (int i = 0; i < neighbourhood.Length; i++)
         {
-            if(neighbourhood[i] != null)
+            if (neighbourhood[i] != null)
             {
                 totalPressure += neighbourhood[i].airPressure;
                 neighbourhoodSize++;
@@ -25,17 +25,51 @@ public class OddBehaviour1 : CellBehaviour
         float averagePressure = totalPressure / neighbourhoodSize;
         PressureTransferModifier = Mathf.Abs(cell.airPressure + averagePressure);
 
-        if(averagePressure > cell.airPressure + meanOffset)
+        if (averagePressure > cell.airPressure + meanOffset)
         {
             return cell.airPressure + 1f * PressureTransferModifier;
         }
-        else if(averagePressure <= cell.airPressure + meanOffset && averagePressure >= cell.airPressure - meanOffset)
+        else if (averagePressure <= cell.airPressure + meanOffset && averagePressure >= cell.airPressure - meanOffset)
         {
             return cell.airPressure;
         }
         else
         {
             return cell.airPressure - 1f * PressureTransferModifier;
+        }
+    }
+
+
+    public float HeatTransferModifier;
+    public float meanHeatOffset;
+
+    public override float CalculateHeat(Cell cell, Cell[] neighbourhood, CAGrid grid)
+    {
+        float totalHeat = 0;
+        float neighbourhoodSize = 0;
+        for (int i = 0; i < neighbourhood.Length; i++)
+        {
+            if (neighbourhood[i] != null)
+            {
+                totalHeat += neighbourhood[i].heat;
+                neighbourhoodSize++;
+            }
+        }
+
+        float averageHeat = totalHeat / neighbourhoodSize;
+        HeatTransferModifier = Mathf.Abs(cell.heat + averageHeat);
+
+        if (averageHeat > cell.heat + meanHeatOffset)
+        {
+            return cell.heat + 1f * HeatTransferModifier;
+        }
+        else if (averageHeat <= cell.heat + meanHeatOffset && averageHeat >= cell.heat - meanHeatOffset)
+        {
+            return cell.heat;
+        }
+        else
+        {
+            return cell.heat - 1f * HeatTransferModifier;
         }
     }
 }

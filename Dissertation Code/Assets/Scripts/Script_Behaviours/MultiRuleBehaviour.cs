@@ -42,4 +42,42 @@ public class MultiRuleBehaviour : CellBehaviour
             return cell.airPressure;
         }
     }
+
+
+    public float HeatTransferModifier;
+    public float meanHeatOffset;
+
+    public override float CalculateHeat(Cell cell, Cell[] neighbourhood, CAGrid grid)
+    {
+        float totalHeat = 0;
+        float neighbourhoodSize = 0;
+        for (int i = 0; i < neighbourhood.Length; i++)
+        {
+            if (neighbourhood[i] != null && !neighbourhood[i].isInert)
+            {
+                totalHeat += neighbourhood[i].heat;
+                neighbourhoodSize++;
+            }
+        }
+
+        float averageHeat = totalHeat / neighbourhoodSize;
+        //PressureTransferModifier = Mathf.Abs(cell.airPressure + averagePressure);
+
+        if (averageHeat > cell.heat + meanHeatOffset)
+        {
+            return cell.heat + HeatTransferModifier * Mathf.InverseLerp(0f, 100f, averageHeat) * neighbourhoodSize;
+        }
+        else if (averageHeat <= cell.heat + meanHeatOffset && averageHeat >= cell.heat)
+        {
+            return cell.heat;
+        }
+        else if (averageHeat < cell.heat && averageHeat > 1f)
+        {
+            return cell.heat - HeatTransferModifier * Mathf.InverseLerp(0f, 100f, averageHeat) * neighbourhoodSize;
+        }
+        else
+        {
+            return cell.heat;
+        }
+    }
 }
