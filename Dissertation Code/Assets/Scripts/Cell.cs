@@ -50,6 +50,7 @@ public class Cell : MonoBehaviour
             color = rend.material.GetColor("_Color");
             color.a = Mathf.InverseLerp(0f, 100000f, airPressure);
             color.b = Mathf.InverseLerp(0f, 100000f, airPressure);
+            //color.a = 0.2f;
             rend.material.SetColor("_Color", color);
         }
 
@@ -65,7 +66,8 @@ public class Cell : MonoBehaviour
         else
         {
             color = rend.material.GetColor("_Color");
-            color.a = Mathf.InverseLerp(0f, 100f, heat);
+            //color.a = Mathf.InverseLerp(0f, 100f, heat);
+            //color.a = 0.2f;
             color.r = Mathf.InverseLerp(0f, 100f, heat);
             rend.material.SetColor("_Color", color);
         }
@@ -76,7 +78,10 @@ public class Cell : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
-        rend.material.SetColor("_Color", Color.blue);
+        rend.material.SetColor("_Color", Color.black);
+        // color = rend.material.GetColor("_Color");
+        // color = Color.white;
+        // rend.material.SetColor("_Color", color);
         MakeCube();
         RenderCube();
     }
@@ -95,7 +100,7 @@ public class Cell : MonoBehaviour
         {
             isInert = false;
 
-            rend.material.SetColor("_Color", Color.blue);
+            rend.material.SetColor("_Color", Color.black);
         }
     }
 
