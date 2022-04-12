@@ -18,6 +18,10 @@ public class CAGrid : MonoBehaviour
     public CellBehaviour behaviour;
     public CellBehaviour startBehaviour;
 
+    public int stepRate = -1;
+
+    int stepCurrent = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,25 +57,31 @@ public class CAGrid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float[,,] newPressures = new float[xLength, yLength, zLength];
-        float[,,] newHeats = new float[xLength, yLength, zLength];
-        for (int x = 0; x < xLength; x++)
+        if (stepCurrent < stepRate || stepRate == -1)
         {
-            for (int y = 0; y < yLength; y++)
+            stepCurrent++;
+            float[,,] newPressures = new float[xLength, yLength, zLength];
+            float[,,] newHeats = new float[xLength, yLength, zLength];
+            for (int x = 0; x < xLength; x++)
             {
-                for (int z = 0; z < zLength; z++)
+                for (int y = 0; y < yLength; y++)
                 {
-                    Cell[] neighbourhood = new Cell[6];
-                    neighbourhood = FindNeighbourhood(cells[x, y, z]);
-                    float newPressure = behaviour.CalculatePressure(cells[x, y, z], neighbourhood, this);
-                    newPressures[x, y, z] = newPressure;
-                    float newHeat = behaviour.CalculateHeat(cells[x, y, z], neighbourhood, this);
-                    newHeats[x, y, z] = newHeat;
+                    for (int z = 0; z < zLength; z++)
+                    {
+                        Cell[] neighbourhood = new Cell[6];
+                        neighbourhood = FindNeighbourhood(cells[x, y, z]);
+                        float newPressure = behaviour.CalculatePressure(cells[x, y, z], neighbourhood, this);
+                        newPressures[x, y, z] = newPressure;
+                        float newHeat = behaviour.CalculateHeat(cells[x, y, z], neighbourhood, this);
+                        newHeats[x, y, z] = newHeat;
+                    }
                 }
             }
+
+            UpdateCells(newPressures, newHeats);
         }
 
-        UpdateCells(newPressures, newHeats);
+        if (Input.GetButtonDown("Jump")) { stepCurrent = 0; }
     }
 
     void UpdateCells(float[,,] newPressures, float[,,] newHeats)
